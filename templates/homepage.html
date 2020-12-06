@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sports online shop</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navar -->
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <a class="navbar-brand" href="{{url_for('homepage')}}"> <img src="/static/logo.png" width="100px" height="50px"></a>
+        <div>
+            <a href="{{url_for('products')}}" class="navbar-brand mr-2">Products</a>
+            <a href="{{url_for('products')}}" class="navbar-brand mr-2"> <img src="/static/jordan.png" height="50" width="50"></a>
+              {% if session['is_logged_in'] %}
+                <a href="{{url_for('shop')}}" class="navbar-brand mr-2">Buy now</a>
+            {% else %}
+                <a href="{{url_for('login')}}" class="navbar-brand mr-2">Buy now</a>
+            {% endif %}
+        </div>
+         <div>
+             {% block content %}
+                {% if session['is_logged_in'] == True %}
+                    <a class="navbar-brand mr-4" href="{{url_for('shop')}}"><i class="fa fa-shopping-cart"></i></a>
+                    <a class="navbar-brand mr-4" href="{{url_for('profile')}}"><i class="fa fa-user-secret">
+                    {{session['username'] }}</i></a>
+                    <a class="navbar-brand mr-4" href="{{url_for('logout')}}"><i class="fa fa-sign-out">Sign out</i></a>
+                {% else %}
+                     <a class="navbar-brand mr-4" href="{{url_for('login')}}"><i class="fa fa-user-circle-o">Log in</i></a>
+                      <a class="navbar-brand" href="{{url_for('register')}}"><i class="fa fa-user-plus">Register</i></a>
+                {% endif %}
+            {% endblock content %}
+         </div>
+    </nav>
+    <!-- Slider -->
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="/static/campaigns/shoppingweek.jpg" alt="Shopping week">
+        </div>
+          <div class="carousel-item">
+          <img class="d-block w-100" src="/static/campaigns/dressyourattittude.jpeg" alt="Dress your attitude">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="/static/campaigns/justinnow.jpg" alt="Just in how">
+        </div>
+          <div class="carousel-item">
+          <img class="d-block w-100" src="/static/campaigns/zxadidas.jpg" alt="ZX Adidas">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+</div>
+    <!-- trending products -->
+    <div class="container">
+        <h3 class="mt-4 mb-5 text-center panel-default" style="font-family:'monospace' " >Trending products</h3>
+        <div class="row">
+            {% if products %}
+                {% for product in products %}
+                    <div class="col-lg-3 col-md-3">
+                        <div class="card" style="width: 18rem;">
+                            <a href="{{url_for('product',product_id=product['product_id'])}}">
+                                <img class="card-img-top" src="/static/products/{{product['name']}}.jpg" alt="{{product['name']}}">
+                            </a>
+                          <div class="card-body">
+                            <p class="card-text">{{product['name']}}<br/>{{product['info']}}</p>
+                          </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <!-- Brands-->
+    <div class="container">
+        <h3 class="mt-4 mb-5 text-center" style="font-family:'monospace' ">Our Brands</h3>
+    </div>
+    <div class="store-wrap d-flex flex-wrap align-content-start w100">
+        <a href="#" class="no-underline store-link">
+            <div class="store-item d-flex flex-column justify-content-center align-items-center">
+                <div class="store-img d-flex align-items-center justify-content-center">
+                    <img alt="Nike" data-src="/static/nike.png" src="/static/nike.png" lazy="loaded">
+                </div>
+                <div class="font13 mt2 _text-gray">Nike</div>
+                <div class="cashback d-flex align-items-center font-weight-bold">
+                </div>
+            </div>
+        </a>
+        <a href="#" class="no-underline store-link">
+            <div class="store-item d-flex flex-column justify-content-center align-items-center">
+                <div class="store-img d-flex align-items-center justify-content-center">
+                    <img alt="Adidas" data-src="/static/adidas.png" src="/static/adidas.png" lazy="loaded">
+                </div>
+                <div class="font13 mt2 _text-gray">Adidas</div>
+                <div class="cashback d-flex align-items-center font-weight-bold">
+                </div>
+            </div>
+        </a>
+        <a href="#" class="no-underline store-link">
+            <div class="store-item d-flex flex-column justify-content-center align-items-center">
+                <div class="store-img d-flex align-items-center justify-content-center">
+                    <img alt="Under armour" data-src="/static/ua.png" src="/static/ua.png" lazy="loaded">
+                </div>
+                <div class="font13 mt2 _text-gray">Under Armour</div>
+                <div class="cashback d-flex align-items-center font-weight-bold">
+                </div>
+            </div>
+        </a>
+        <a href="#" class="no-underline store-link">
+            <div class="store-item d-flex flex-column justify-content-center align-items-center">
+                <div class="store-img d-flex align-items-center justify-content-center">
+                    <img alt="Jordan" data-src="/static/jordan.png" src="/static/jordan.png" lazy="loaded">
+                </div>
+                <div class="font13 mt2 _text-gray">Air Jordan</div>
+                <div class="cashback d-flex align-items-center font-weight-bold">
+                </div>
+            </div>
+        </a>
+        <a href="#" class="no-underline store-link">
+            <div class="store-item d-flex flex-column justify-content-center align-items-center">
+                <div class="store-img d-flex align-items-center justify-content-center">
+                    <img alt="Champion" data-src="/static/champion.png" src="/static/champion.png" lazy="loaded">
+                </div>
+                <div class="font13 mt2 _text-gray">Champion</div>
+                <div class="cashback d-flex align-items-center font-weight-bold">
+                </div>
+            </div>
+        </a>
+    </div>
+    <!-- Footer -->
+	<section id="footer" class="mt-5">
+		<div class="container">
+			<div class="row text-center text-xs-center text-sm-left text-md-left">
+				<div class="col-xs-12 col-sm-4 col-md-4">
+					<h5>Categories</h5>
+					<ul class="list-unstyled quick-links">
+						<li><a href="{{url_for('homepage')}}"><i class="fa fa-angle-double-right"></i>Home</a></li>
+						<li><a href="{{url_for('homepage')}}"><i class="fa fa-angle-double-right"></i>About</a></li>
+						<li><a href="{{url_for('register')}}"><i class="fa fa-angle-double-right"></i>Register</a></li>
+						<li><a href="{{url_for('login')}}"><i class="fa fa-angle-double-right"></i>Login</a></li>
+					</ul>
+				</div>
+				<div class="col-xs-12 col-sm-4 col-md-4">
+					<h5>What we offer</h5>
+					<ul class="list-unstyled quick-links">
+						<li><a href="{{url_for('products')}}"><i class="fa fa-angle-double-right"></i>Products</a></li>
+						<li><a href="{{url_for('brands')}}"><i class="fa fa-angle-double-right"></i>Brands</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+					<ul class="list-unstyled list-inline social text-center">
+						<li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-instagram"></i></a></li>
+					</ul>
+				</div>
+				<hr>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+					<p><u><a href="#">Sports Online Shop</a></u> Skopje Macedonia</p>
+					<p class="h6">© All right Reversed.<a class="text-green ml-2" href="#" target="_blank">JulÇezari</a></p>
+				</div>
+				<hr>
+			</div>
+		</div>
+	</section>
+	<!-- ./Footer -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+</body>
+<style>
+    @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+    a{
+        font-family: 'Josefin Slab', serif;
+        font-weight: bold;
+    }
+    /* Footer */
+    section {
+        padding: 60px 0;
+    }
+
+    section .section-title {
+        text-align: center;
+        color: #c0392b;
+        margin-bottom: 50px;
+        text-transform: uppercase;
+    }
+    #footer {
+        background: #c0392b !important;
+    }
+    #footer h5{
+        padding-left: 10px;
+        border-left: 3px solid #eeeeee;
+        padding-bottom: 6px;
+        margin-bottom: 20px;
+        color:#ffffff;
+    }
+    #footer a {
+        color: #ffffff;
+        text-decoration: none !important;
+        background-color: transparent;
+        -webkit-text-decoration-skip: objects;
+    }
+    #footer ul.social li{
+        padding: 3px 0;
+    }
+    #footer ul.social li a i {
+        margin-right: 5px;
+        font-size:25px;
+        -webkit-transition: .5s all ease;
+        -moz-transition: .5s all ease;
+        transition: .5s all ease;
+    }
+    #footer ul.social li:hover a i {
+        font-size:30px;
+        margin-top:-10px;
+    }
+    #footer ul.social li a,
+    #footer ul.quick-links li a{
+        color:#ffffff;
+    }
+    #footer ul.social li a:hover{
+        color:#eeeeee;
+    }
+    #footer ul.quick-links li{
+        padding: 3px 0;
+        -webkit-transition: .5s all ease;
+        -moz-transition: .5s all ease;
+        transition: .5s all ease;
+    }
+    #footer ul.quick-links li:hover{
+        padding: 3px 0;
+        margin-left:5px;
+        font-weight:700;
+    }
+    #footer ul.quick-links li a i{
+        margin-right: 5px;
+    }
+    #footer ul.quick-links li:hover a i {
+        font-weight: 700;
+    }
+
+    @media (max-width:767px){
+        #footer h5 {
+        padding-left: 0;
+        border-left: transparent;
+        padding-bottom: 0px;
+        margin-bottom: 10px;
+    }
+    }
+    a {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+    a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+    img {
+        vertical-align: middle;
+        border-style: none;
+    }
+    .d-flex {
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+    }
+    .flex-column {
+        -webkit-box-orient: vertical !important;
+        -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+        flex-direction: column !important;
+    }
+    .flex-wrap {
+        -ms-flex-wrap: wrap !important;
+        flex-wrap: wrap !important;
+    }
+    .justify-content-center {
+        -webkit-box-pack: center !important;
+        -ms-flex-pack: center !important;
+        justify-content: center !important;
+    }
+    .align-items-center {
+        -webkit-box-align: center !important;
+        -ms-flex-align: center !important;
+        align-items: center !important;
+    }
+    .align-content-start {
+        -ms-flex-line-pack: start !important;
+        align-content: flex-start !important;
+    }
+    .font-weight-bold {
+        font-weight: 700 !important;
+    }
+    @media print {
+        *,
+        ::after,
+        ::before {
+            text-shadow: none !important;
+            box-shadow: none !important;
+        }
+        a:not(.btn) {
+            text-decoration: underline;
+        }
+        img {
+            page-break-inside: avoid;
+        }
+    }
+
+    .w100 {
+        width: 100%;
+    }
+
+    .font13 {
+        font-size: 13px;
+    }
+    .mt2 {
+        margin-top: 2px;
+    }
+    a.no-underline {
+        text-decoration: none;
+    }
+    a.no-underline:hover {
+        text-decoration: none;
+    }
+    ._text-gray {
+        color: #616c74;
+    }
+    .store-wrap {
+        border-top-style: solid;
+        border-color: #e8ebed;
+        border-width: 2px;
+        background-color: #fff;
+        padding: 4px;
+    }
+    .store-link {
+        width: 14.2%;
+        height: 120px;
+    }
+    .store-item {
+        height: 100%;
+    }
+    .store-item:hover {
+        box-shadow: 0 3px 7px 0 rgba(0, 23, 46, 0.16);
+    }
+    .store-img {
+        max-width: 102px;
+        max-height: 45px;
+        min-height: 45px;
+    }
+    .store-img img {
+        max-width: 102px;
+        max-height: 45px;
+    }
+    .cashback {
+        font-size: 14px;
+        color: #db8700;
+    }
+    @media (max-width: 1360px) {
+        .store-link {
+            width: 20%;
+        }
+    }
+    @media (max-width: 992px) {
+        .store-link {
+            width: 20%;
+            height: 106px;
+        }
+    }
+    @media (max-width: 768px) {
+        .store-link {
+            width: 25%;
+            height: 150px;
+        }
+    }
+    @media (max-width: 576px) {
+        .store-link {
+            width: 50%;
+            height: 150px;
+            border: solid 1px #f1f3f6;
+        }
+        .store-wrap {
+            border: 0;
+            padding: 0;
+        }
+        .cashback {
+            margin-top: 5px;
+            font-size: 17px;
+        }
+        .store-img {
+            max-width: 140px;
+            min-height: 65px;
+        }
+        .store-img img {
+            max-width: 140px;
+            max-height: 65px;
+        }
+    }
+
+
+</style>
+</html>
