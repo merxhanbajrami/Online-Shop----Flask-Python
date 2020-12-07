@@ -9,54 +9,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!------ Include the above in your HEAD tag ---------->
-</head>
-<body>
-    	<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
-				<div class="d-flex justify-content-center">
-					<div class="brand_logo_container">
-						<a href="{{url_for('homepage')}}"><img src="/static/jordan.png" class="brand_logo" alt="Logo"></a>
-					</div>
-				</div>
-				<div class="d-flex justify-content-center form_container">
-					<form action="{{ url_for('login') }}" method="POST">
-						{% with messages = get_flashed_messages() %}
-                            {% if messages %}
-                                {% for message in messages %}
-									<div class="alert alert-danger">
-										{{message}}
-									</div>
-								{% endfor %}
-                            {% endif %}
-                         {% endwith %}
-						<div class="input-group mb-3">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fa fa-user"></i></span>
-							</div>
-							<input type="text" name="username" class="form-control input_user" value="" placeholder="username">
-						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fa fa-key"></i></span>
-							</div>
-							<input type="password" name="password" class="form-control input_pass" value="" placeholder="password">
-						</div>
-                        <div class="d-flex justify-content-center mt-3 login_container">
-                           <button type="submit" name="button" class="btn login_btn">Login</button>
-                       </div>
-					</form>
-				</div>
-				<div class="mt-4">
-					<div class="d-flex justify-content-center links">
-						Don't have an account?
-                        <a href="{{url_for('register')}}" class="ml-2"><i class="fa fa-user-plus ml-2 mr-1">Sign up</i></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-    <style>
+	    <style>
         		body,
 		html {
 			margin: 0;
@@ -128,5 +81,52 @@
 			background-color: #c0392b !important;
 		}
     </style>
+</head>
+<body>
+    	<div class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<div class="brand_logo_container">
+						<a href="{{url_for('homepage')}}"><img src="/static/jordan.png" class="brand_logo" alt="Logo"></a>
+					</div>
+				</div>
+				<div class="d-flex justify-content-center form_container">
+					<form action="{{ url_for('login') }}" method="POST">
+						{% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                {% for message in messages %}
+									<div class="alert alert-danger">
+										{{message}}
+									</div>
+								{% endfor %}
+                            {% endif %}
+                         {% endwith %}
+						<div class="input-group mb-3">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fa fa-user"></i></span>
+							</div>
+							<input type="text" name="username" class="form-control input_user" value="" placeholder="username">
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fa fa-key"></i></span>
+							</div>
+							<input type="password" name="password" class="form-control input_pass" value="" placeholder="password">
+						</div>
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                           <button type="submit" name="button" class="btn login_btn">Login</button>
+                       </div>
+					</form>
+				</div>
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Don't have an account?
+                        <a href="{{url_for('register')}}" class="ml-2"><i class="fa fa-user-plus ml-2 mr-1">Sign up</i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

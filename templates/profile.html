@@ -6,146 +6,6 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     </head>
-    <body>
-    <!-- <h3>Your wish list is:</h3>
-        {% if wish_list %}
-            {% for product in wish_list %}
-            <span>Product1:</span>
-            <p>{{product['name']}}</p>
-            <p>{{product['info']}}</p>
-            <p>{{product['price']}}</p>
-            <img src="/static/products/{{product['name']}}.jpg">
-            <p>{{product['name']}}</p>
-
-            {% endfor %}
-        {% endif %}
-        <h3>Your shopping list is:</h3>
-
-        {% if shopping_cart %}
-            {% for product in shopping_cart %}
-                 <span>Product1:</span>
-                <p>{{product['name']}}</p>
-                <p>{{product['info']}}</p>
-                <p>{{product['price']}}</p>
-                <img src="/static/products/{{product['name']}}.jpg">
-                <p>{{product['name']}}</p>
-            {% endfor %}
-        {% endif %}
-        -->
-        <div id="throbber" style="display:none; min-height:120px;"></div>
-    <div id="noty-holder"></div>
-    <div id="wrapper">
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{url_for('homepage')}}">
-                    <div class="d-flex">
-                        <img src="/static/jordan_red.png" alt="LOGO" width="70" height="50">
-                        <span id="sport">Sports Shop</span>
-                    </div>
-                </a>
-            </div>
-        <!-- Top Menu Items -->
-        <ul class="nav navbar-right top-nav">
-            <li class="dropdown d-inline">
-                 <a href="{{url_for('logout')}}" style="font-family: monospace " class="dropdown-toggle" data-toggle="dropdown">Sign out
-                    <b class="fa fa-sign-out"></b></a>
-            </li>
-        </ul>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav side-nav">
-                <li>
-                    <a href="{{url_for('profile')}}"><i class="fa fa-fw fa fa-dashboard"></i> Dashboard </a>
-                </li>
-                <li>
-                    <a href="{{url_for('profile_info', user_id=user['user_id'])}}"><i class="fa fa-fw fa-user-plus"></i>  Personal info</a>
-                </li>
-                <li>
-                    <a href="{{url_for('shop')}}"><i class="fa fa-fw fa-shopping-cart"></i>Shopping cart</a>
-                </li>
-                <li>
-                    <a href="{{url_for('profile')}}"><i class="fa fa-fw fa fa-heart-o"></i> Favorite products</a>
-                </li>
-
-            </ul>
-        </div>
-    </nav>
-
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <!-- Page Heading -->
-                <div class="row" id="main" >
-                    <div class="col-sm-12 col-md-12 well col-12" id="content">
-                        <h3>Welcome {{user['name']}}</h3>
-                        <hr>
-                        <div class="row">
-                                 {% if wish_list %}
-                                    <h3 class="text-center">Your wish list is :</h3>
-                                    <br>
-                                    {% for product in wish_list %}
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <a href="{{url_for('product',product_id=product['product_id'])}}">
-                                            <img src="/static/products/{{product['name']}}.jpg" height="200" width="200">
-                                        </a>
-                                        <p>Name:<strong> {{product['name']}}</strong></p>
-                                        <p>Info:<strong> {{product['info']}}</strong></p>
-                                        <p>Price:<strong> {{product['price']}}$</strong></p>
-                                        <div>
-                                            <button class="btn btn-info">
-                                                <a href="{{url_for('add_to_cart_profile',product_id=product['product_id'])}}" style="text-decoration: none;color:white">Add to cart</a>
-                                            </button>
-                                            <button class="btn btn-danger">
-                                                <a href="{{url_for('remove_item_profile',product_id=product['product_id'])}}"  style="text-decoration: none;color:white">Delete</a>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                {% else %}
-                                        <h4 class="alert-danger">At the moment you don't have any products in your wish list!</h4>
-                                {% endif %}
-                        </div>
-                        <hr>
-                        <h3 class="text-center mt-lg-4 mt-md-4 mb-lg-4 mb-md-4">Your orders list is:</h3>
-                        <br>
-                        <div class="row mt-5">
-                            {% if orders %}
-                                    <table class="table table-striped">
-                                          <thead>
-                                            <tr>
-                                              <th scope="col">Order number</th>
-                                               <th scope="col">Handling cost</th>
-                                              <th scope="col">Order date</th>
-                                              <th scope="col"></th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                                {% for order in orders %}
-                                                <tr>
-                                                  <td>{{order['order_number']}}</td>
-                                                  <td>{{order['handling_cost']}}$</td>
-                                                  <td>{{order['order_date']}}</td>
-                                                  <td><a href="{{ url_for('view_order', order_number=order['order_number']) }}" style="text-decoration: none">View order</a></td>
-                                                </tr>
-                                                {% endfor %}
-                                          </tbody>
-                                    </table>
-                                {% else %}
-                                        <h4 class="alert-danger">At the moment you don't have any orders made</h4>
-                                {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    </body>
     <style>
     @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
     @media(min-width:768px) {
@@ -295,4 +155,145 @@
         padding: 5px 15px;
     }
     </style>
+    <body>
+    <!-- <h3>Your wish list is:</h3>
+        {% if wish_list %}
+            {% for product in wish_list %}
+            <span>Product1:</span>
+            <p>{{product['name']}}</p>
+            <p>{{product['info']}}</p>
+            <p>{{product['price']}}</p>
+            <img src="/static/products/{{product['name']}}.jpg">
+            <p>{{product['name']}}</p>
+
+            {% endfor %}
+        {% endif %}
+        <h3>Your shopping list is:</h3>
+
+        {% if shopping_cart %}
+            {% for product in shopping_cart %}
+                 <span>Product1:</span>
+                <p>{{product['name']}}</p>
+                <p>{{product['info']}}</p>
+                <p>{{product['price']}}</p>
+                <img src="/static/products/{{product['name']}}.jpg">
+                <p>{{product['name']}}</p>
+            {% endfor %}
+        {% endif %}
+        -->
+        <div id="throbber" style="display:none; min-height:120px;"></div>
+    <div id="noty-holder"></div>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{url_for('homepage')}}">
+                    <div class="d-flex">
+                        <img src="/static/jordan_red.png" alt="LOGO" width="70" height="50">
+                        <span id="sport">Sports Shop</span>
+                    </div>
+                </a>
+            </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+            <li class="dropdown d-inline">
+                 <a href="{{url_for('logout')}}" style="font-family: monospace " class="dropdown-toggle" data-toggle="dropdown">Sign out
+                    <b class="fa fa-sign-out"></b></a>
+            </li>
+        </ul>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li>
+                    <a href="{{url_for('profile')}}"><i class="fa fa-fw fa fa-dashboard"></i> Dashboard </a>
+                </li>
+                <li>
+                    <a href="{{url_for('profile_info', user_id=user['user_id'])}}"><i class="fa fa-fw fa-user-plus"></i>  Personal info</a>
+                </li>
+                <li>
+                    <a href="{{url_for('shop')}}"><i class="fa fa-fw fa-shopping-cart"></i>Shopping cart</a>
+                </li>
+                <li>
+                    <a href="{{url_for('profile')}}"><i class="fa fa-fw fa fa-heart-o"></i> Favorite products</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row" id="main" >
+                    <div class="col-sm-12 col-md-12 well col-12" id="content">
+                        <h3>Welcome {{user['name']}}</h3>
+                        <hr>
+                        <div class="row">
+                                 {% if wish_list %}
+                                    <h3 class="text-center">Your wish list is :</h3>
+                                    <br>
+                                    {% for product in wish_list %}
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <a href="{{url_for('product',product_id=product['product_id'])}}">
+                                            <img src="/static/products/{{product['name']}}.jpg" height="200" width="200">
+                                        </a>
+                                        <p>Name:<strong> {{product['name']}}</strong></p>
+                                        <p>Info:<strong> {{product['info']}}</strong></p>
+                                        <p>Price:<strong> {{product['price']}}$</strong></p>
+                                        <div>
+                                            <button class="btn btn-info">
+                                                <a href="{{url_for('add_to_cart_profile',product_id=product['product_id'])}}" style="text-decoration: none;color:white">Add to cart</a>
+                                            </button>
+                                            <button class="btn btn-danger">
+                                                <a href="{{url_for('remove_item_profile',product_id=product['product_id'])}}"  style="text-decoration: none;color:white">Delete</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                {% else %}
+                                        <h4 class="alert-danger">At the moment you don't have any products in your wish list!</h4>
+                                {% endif %}
+                        </div>
+                        <hr>
+                        <h3 class="text-center mt-lg-4 mt-md-4 mb-lg-4 mb-md-4">Your orders list is:</h3>
+                        <br>
+                        <div class="row mt-5">
+                            {% if orders %}
+                                    <table class="table table-striped">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col">Order number</th>
+                                               <th scope="col">Handling cost</th>
+                                              <th scope="col">Order date</th>
+                                              <th scope="col"></th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                                {% for order in orders %}
+                                                <tr>
+                                                  <td>{{order['order_number']}}</td>
+                                                  <td>{{order['handling_cost']}}$</td>
+                                                  <td>{{order['order_date']}}</td>
+                                                  <td><a href="{{ url_for('view_order', order_number=order['order_number']) }}" style="text-decoration: none">View order</a></td>
+                                                </tr>
+                                                {% endfor %}
+                                          </tbody>
+                                    </table>
+                                {% else %}
+                                        <h4 class="alert-danger">At the moment you don't have any orders made</h4>
+                                {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
 </html>
